@@ -2,8 +2,9 @@
 class Enemy {
   constructor() {
     // Variables applied to each of our instances go here
-    this.x = 0;
-    this.y = 0;
+    this.x = 100;
+    this.y = 83 * Math.floor(Math.random() * 3) + 65;
+    this.speed = 60 * Math.floor(Math.random() * 3 + 1);
     this.sprite = 'images/enemy-bug.png';
   }
   // Update the enemy's position, required method for game
@@ -11,6 +12,14 @@ class Enemy {
   update(dt) {
     // Multiply any movement by the dt parameter, ensuring the game runs at the same speed for all computers.
     this.x += (this.speed * dt);
+    if (this.x > 505) {
+        this.x = -100;
+        this.y = 83 * Math.floor(Math.random() * 3) + 65;
+        this.speed = 60 * Math.floor(Math.random() * 3 + 1);
+    }
+    // Check for collision with Player
+
+    }
   }
   // Draw the enemy on the screen, required method for game
   render() {
@@ -25,10 +34,8 @@ class Player {
     this.y = 405;
     this.sprite = 'images/char-cat-girl.png';
   }
-  update() {
-    //check for collision
+  update()
     //check if water has been reached
-
   }
   //Draw the player on the screen
   render() {
@@ -48,7 +55,7 @@ class Player {
             };
             break;
         case 'left':
-            if (this.x >0) {
+            if (this.x > 0) {
                 this.x -= 101;
             };
             break;
@@ -64,7 +71,6 @@ class Player {
 // Instantiate objects.
 const allEnemies = [new Enemy()];
 const player = new Player();
-
 
 // Listens for key presses and sends the keys to Player.handleInput() method.
 document.addEventListener('keyup', function(e) {
