@@ -3,10 +3,10 @@ class Enemy {
   constructor() {
     // Variables applied to each of our instances go here
     this.x = -101;
-    this.y = 83 * Math.floor(Math.random() * 3) + 65;
-    this.speed = 60 * Math.floor(Math.random() * 3 + 1);
+    this.y = 83 * Math.floor(Math.random() * 3) + 60;
+    this.speed = 100 * Math.floor(Math.random() * 3 + 1);
     this.sprite = 'images/enemy-bug.png';
-  }
+}
   // Update the enemy's position, required method for game
   // Parameter: dt, a time delta between ticks
   update(dt) {
@@ -14,9 +14,10 @@ class Enemy {
     this.x += (this.speed * dt);
     if (this.x > 505) {
       this.x = -101;
-      this.y = 83 * Math.floor(Math.random() * 3) + 65;
-      this.speed = 60 * Math.floor(Math.random() * 3 + 1);
+      this.y = 83 * Math.floor(Math.random() * 3) + 60;
+      this.speed = 100 * Math.floor(Math.random() * 3 + 1);
     }
+
     // Check for collision with Player
     if (
       player.x >= this.x - 83 &&
@@ -25,8 +26,7 @@ class Enemy {
       player.y <= this.y + 80
     ) {
       //Return player to starting position
-      player.x = 202;
-      player.y = 405;
+      player.reset();
     }
   }
   // Draw the enemy on the screen, required method for game
@@ -43,12 +43,11 @@ class Player {
     this.sprite = 'images/char-cat-girl.png';
   }
   update(){
-    //check to see if the player has reached the water
-    if (this.y === -10) {
-      this.x = 202;
-      this.y = 405;
-      //add a new enemy to board (max of 8)
-      if(allEnemies.length < 8){
+    //check to see if the player has reached the water, then reset (if true)
+    if (this.y < 20) {
+      this.reset();
+      //add a new enemy to board (max of 6)
+      if(allEnemies.length < 6){
         allEnemies.push(new Enemy());
       }
     }
@@ -82,6 +81,10 @@ class Player {
       };
       break;
     }
+  }
+  reset(){
+    this.x = 202;
+    this.y = 405;
   }
 }
 
